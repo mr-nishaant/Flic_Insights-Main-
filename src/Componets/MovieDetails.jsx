@@ -63,13 +63,13 @@ function MovieDetails() {
 
   return (
     <>
-      <div className=" md:flex">
-        <div className=" md:p-1 md:px-20 p-2 px-6 md:w-1/3 flex">
-          {/* Movie Banner */}
+      <div className="md:flex">
+        <div className="md:p-1 md:px-20 p-2 px-6 md:w-1/3 flex">
+          {/* Movie Banner with Flip Animation */}
           <img
             src={IMAGE_BASE_URL + movie.poster_path}
             alt={movie.title}
-            className="rounded-lg mb-4 w-[300px] md:w-80"
+            className="rounded-3xl mb-4 w-[300px] md:w-80 border-4 border-blue-950 shadow-lg shadow-slate-400 hover:scale-110 ease-in-out animate-flip" // Applied animation class
           />
         </div>
 
