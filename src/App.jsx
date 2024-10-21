@@ -4,6 +4,7 @@ import Header from './Componets/Header';
 import SearchResults from './Componets/SearchResults';  // Import the search results component
 import HomePage from './Componets/HomePage';
 import MovieDetails from './Componets/MovieDetails';
+import Footer from './Componets/Footer';
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/search/:query" element={<SearchResults />} />
                     <Route path="/movie/:id" element={<MovieDetails />} /> 
                 </Routes>
+                <Footer/>
             </div>
         </Router>
     );
