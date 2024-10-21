@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import GlobalApi from "../Services/GlobalApi";
-import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const API_KEY = GlobalApi.api_key;
 const TMDB_API_URL = "https://api.themoviedb.org/3/movie";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
+const EXCHANGE_RATE = 83; // 1 USD = 83 INR (can be dynamic)
 
 function MovieDetails() {
   const { id } = useParams();
@@ -41,7 +42,7 @@ function MovieDetails() {
   function MovieRating({ rating }) {
     const stars = [];
     const ratingInStars = rating / 2;
-  
+
     // Loop to generate full stars, half stars, and empty stars
     for (let i = 1; i <= 5; i++) {
       if (ratingInStars >= i) {
@@ -52,9 +53,13 @@ function MovieDetails() {
         stars.push(<FaRegStar key={i} className="text-yellow-500" />); // Empty star
       }
     }
-  
+
     return <div className="flex">{stars}</div>;
   }
+
+  // Convert budget and revenue to INR
+  const budgetInINR = movie.budget * EXCHANGE_RATE;
+  const revenueInINR = movie.revenue * EXCHANGE_RATE;
 
   return (
     <>
@@ -81,10 +86,26 @@ function MovieDetails() {
               year: "numeric",
             })}
           </p>
-          <p className="mt-2 font-bold text-blue-500">Rating : {(movie.vote_average/2).toFixed(1)} / 5</p>
-          <MovieRating rating={movie.vote_average} /> {/* Star rating component */}
+          <p className="mt-2 font-bold text-blue-500">
+            Rating : {(movie.vote_average / 2).toFixed(1)} / 5
+          </p>
+          <MovieRating rating={movie.vote_average} />{" "}
+          {/* Star rating component */}
           <p className="text-white mt-4 text-xl font-serif">
             Story: {movie.overview}
+          </p>
+          {/* Display Budget and Revenue in INR */}
+          <p className="text-yellow-400 mt-2">
+            Budget:{" "}
+            {budgetInINR !== 0
+              ? `₹ ${budgetInINR.toLocaleString("en-IN")} INR`
+              : "Data Not Available"}
+          </p>
+          <p className="text-green-400 mt-2">
+            Revenue:{" "}
+            {revenueInINR !== 0
+              ? `₹ ${revenueInINR.toLocaleString("en-IN")} INR`
+              : "Data Not Available"}
           </p>
         </div>
       </div>
